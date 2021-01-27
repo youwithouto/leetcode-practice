@@ -10,5 +10,5 @@ class Solution:
         for i in range(len(s)):
             c = s[i]
             if d[c] == 1:
-                return d[c]
+                return i
         return -1
