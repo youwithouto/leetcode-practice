@@ -1,26 +1,20 @@
 class Solution:
     def myAtoi(self, s: str) -> int:
-        MAX, MIN = pow(2, 31) - 1, 0 - pow(2, 31)
-        result = 0
-        tmp = ""
-        s = s.strip()
         if len(s) == 0:
-            return result
-        isNegative = s[0] == "-"
-        if isNegative or s[0] == "+":
-            s = s[1:]
+            return 0
+        ls = list(s.strip())
 
-        if len(s) == 0 or not s[0].isdigit():
-            return result
+        if len(ls) == 0:
+            return 0
+        sign = -1 if ls[0] == '-' else 1
 
-        for c in s:
-            if c.isdigit():
-                tmp += c
-            else:
-                break
-        result = int(tmp)
-        if isNegative:
-            result = 0 - MIN if 0 - result < MIN else result
-        else:
-            result = MAX if result > MAX else result
-        return 0 - result if isNegative else result
+        if ls[0] in ['-', '+']:
+            del ls[0]
+
+        ret, i = 0, 0
+
+        while i < len(ls) and ls[i].isdigit():
+            ret = ret * 10 + ord(ls[i]) - ord('0')
+            i += 1
+
+        return max(-2 ** 31, min(sign * ret, 2**31 - 1))
